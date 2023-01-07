@@ -1,0 +1,33 @@
+{
+    "schemaVersion": 1,
+    "id": "exhud",
+    "version": "${version}",
+    "name": "Ex HUD",
+    "description": "Standalone mod bringing back the old PlayerEx HUD.",
+    "authors": [
+        "CleverNucleus"
+    ],
+    "contact": {
+        "homepage": "https://github.com/CleverNucleus/PlayerEx",
+        "sources": "https://github.com/CleverNucleus/PlayerEx"
+    },
+    "license": "MIT",
+    "icon": "assets/exhud/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            "com.github.clevernucleus.exhud.ExHUD"
+        ],
+        "modmenu": [
+        	"com.github.clevernucleus.exhud.config.ModMenuCompat"
+        ]
+    },
+    "mixins": [
+        "exhud.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.14.10",
+        "minecraft": "1.18.2",
+        "java": ">=17"
+    }
+}

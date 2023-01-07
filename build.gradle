@@ -1,3 +1,5 @@
+import com.modrinth.minotaur.dependencies.VersionDependency
+
 plugins {
 	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
@@ -67,4 +69,17 @@ publishing {
 	repositories {
 		
 	}
+}
+
+modrinth {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("Enter a Modrinth token: ");
+    token = br.readLine();
+    projectId = "387DYXF9"
+    versionNumber = "${project.mod_version}"
+    versionName = "${project.mod_version}"
+    uploadFile = remapJar
+    gameVersions = ["${project.minecraft_version}"]
+    loaders = ["fabric"]
+    dependencies = [new VersionDependency("CRaHmCcJ", "embedded")]
 }

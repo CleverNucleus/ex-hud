@@ -16,6 +16,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.JumpingMount;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
@@ -80,17 +81,19 @@ abstract class InGameHudMixin {
 	}
 	
 	// Removes vanilla mount jump bar and renders our own.
-	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderMountJumpBar(Lnet/minecraft/client/util/math/MatrixStack;I)V"))
-	private void exhud_renderMountJumpBar(InGameHud inGameHud, MatrixStack matrices, int x) {
+	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderMountJumpBar(Lnet/minecraft/entity/JumpingMount;Lnet/minecraft/client/util/math/MatrixStack;I)V"))
+	private void exhud_renderMountJumpBar(InGameHud inGameHud, JumpingMount jumpingMount, MatrixStack matrices, int x) {
 		RenderSystem.setShaderTexture(0, ExHUD.GUI_LEVEL_BARS);
 		
 		float f = this.client.player.getMountJumpStrength();
 		int j = (int)(f * 183.0F);
 		
-		DrawableHelper.drawTexture(matrices, x, this.scaledHeight - 27, 0, 6, 182, 3, 256, 16);
+		DrawableHelper.drawTexture(matrices, x, this.scaledHeight - 27, 0, 9, 182, 3, 256, 16);
 		
-		if(j > 0) {
-			DrawableHelper.drawTexture(matrices, x, this.scaledHeight - 27, 0, 9, j, 3, 256, 16);
+		if(jumpingMount.getJumpCooldown() > 0) {
+			DrawableHelper.drawTexture(matrices, x, this.scaledHeight - 27, 0, 6, 182, 3, 256, 16);
+		} else if(j > 0) {
+			DrawableHelper.drawTexture(matrices, x, this.scaledHeight - 27, 0, 12, j, 3, 256, 16);
 		}
 	}
 	
